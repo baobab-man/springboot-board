@@ -20,6 +20,30 @@ public class BoardService {
     }
 
     @Transactional
+    public List<BoardDto> searchPosts(String keyword) {
+        List<Board> boards = boardRepository.findByTitleContaining(keyword);
+        List<BoardDto> boardDtoList = new ArrayList<>();
+
+        if(boards.isEmpty()) return boardDtoList;
+
+        for(Board board : boards) {
+            boardDtoList.add(this.convertEntityToDto(board));
+        }
+
+        return boardDtoList;
+    }
+
+    private BoardDto convertEntityToDto(Board board) {
+        return BoardDto.builder()
+                .id(board.getId())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .writer(board.getWriter())
+                .createdDate(board.getCreatedDate())
+                .build();
+    }
+
+    @Transactional
     public void savePost(BoardDto boardDto) {
         boardRepository.save(boardDto.toEntity());
     }
