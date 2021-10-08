@@ -8,6 +8,7 @@ import spring_project.board.dto.BoardDto;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BoardService {
@@ -41,5 +42,21 @@ public class BoardService {
         }
 
         return boardDtoList;
+    }
+
+    @Transactional
+    public BoardDto getPost(Long id) {
+        Optional<Board> boardWrapper = boardRepository.findById(id);
+        Board board = boardWrapper.get();
+
+        BoardDto boardDto = BoardDto.builder()
+                .id(board.getId())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .writer(board.getWriter())
+                .createdDate(board.getCreatedDate())
+                .build();
+
+        return boardDto;
     }
 }
