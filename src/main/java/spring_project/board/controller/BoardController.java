@@ -1,10 +1,13 @@
 package spring_project.board.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import spring_project.board.dto.BoardDto;
 import spring_project.board.service.BoardService;
+
+import java.util.List;
 
 @Controller
 public class BoardController {
@@ -16,7 +19,10 @@ public class BoardController {
     }
 
     @GetMapping("/")
-    public String list() {
+    public String list(Model model) {
+        List<BoardDto> boardDtoList = boardService.getBoardlist();
+        model.addAttribute("boardList", boardDtoList);
+
         return "board/list.html";
     }
 
