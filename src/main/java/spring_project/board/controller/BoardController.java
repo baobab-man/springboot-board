@@ -3,6 +3,8 @@ package spring_project.board.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import spring_project.board.dto.BoardDto;
+import spring_project.board.service.BoardService;
 
 @Controller
 public class BoardController {
